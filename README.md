@@ -20,7 +20,7 @@ This skill does not fully automate research. It follows a three-zone human-AI co
 
 - Gate 1: Codebook confirmation — Claude proposes 10–15 codes; user reviews before full analysis begins.
 - Gate 2: Finding classification — Claude presents each candidate finding with a proposed status (formal finding / directional signal / downgrade / add caveat / drop as noise). A default-strict rule prevents over-promotion: unless evidence strength, denominator stability, and counter-example explanation are all adequate, findings default downward.
-- Gate 3: Report quality review — Claude presents the full draft with red-team issues severity-ordered. Includes a check on whether recommendations exceed evidence strength.
+- Gate 3: Independent report quality review — an **independent reviewer subagent** audits the report under strict input control. The subagent receives only the final report, the review rubric, and source artifacts (finding ledger, crosstabs, quote tables, sample notes). It does not receive the writing agent's reasoning history, codebook evolution, or strategy discussions. This separation prevents self-review bias and produces sharper critiques.
 
 **Zone 3 — Human decision (2 points).** Scope confirmation at the start (if business decision, audience, or data files are unclear) and publication sign-off at the end.
 
@@ -84,7 +84,7 @@ After restarting Claude Desktop, the skill will appear in the available skills l
 
 ## Status
 
-This skill is actively evolving through real research projects. The current version includes the Gate 2 default-strict rule (preventing over-promotion of findings), the Gate 3 evidence-strength check for recommendations, delivery formatting extracted into a dedicated reference, and genericized examples suitable for any product domain.
+This skill is actively evolving through real research projects. The current version includes the Gate 2 default-strict rule (preventing over-promotion of findings), the Gate 3 independent subagent review with strict input control (separating writing from auditing), delivery formatting extracted into a dedicated reference, and genericized examples suitable for any product domain.
 
 ---
 
@@ -110,7 +110,7 @@ This skill is actively evolving through real research projects. The current vers
 
 - Gate 1：编码本确认——Claude 提出 10–15 个编码；用户审查后才开始正式分析。
 - Gate 2：发现分类——Claude 呈现每个候选发现及建议状态（正式发现 / 方向性信号 / 降置信度 / 补边界条件 / 作为噪声丢弃）。内置默认从严规则：只要证据强度、分母稳定性、反例解释有一项不足，就不升级为正式发现。
-- Gate 3：报告质量审查——Claude 呈现完整草稿和按严重度排序的红队问题，包括检查建议是否超过证据强度。
+- Gate 3：独立报告质量审查——由一个**独立审查 subagent** 在严格输入管控下审阅报告。审查者只拿到最终报告、review rubric 和用于事实核查的 source artifacts（发现台账、交叉表、引用表、样本说明），不拿写作 agent 的推理过程、编码本演变记录或策略讨论历史。这种隔离避免了"自己审自己"的偏差，让审查更加尖锐。
 
 **Zone 3 — 人类决策（2 个节点）。** 开始时的范围确认（如果业务决策、受众或数据文件不明确）和结束时的发布签字。
 
@@ -160,4 +160,4 @@ cp -r user-research ~/.claude/skills/
 
 ## 当前状态
 
-这个技能随着真实研究项目持续迭代。当前版本包含 Gate 2 默认从严规则（防止过度升级发现）、Gate 3 建议是否超过证据强度检查、交付格式抽取为独立参考文件、以及适用于任何产品领域的通用化示例。
+这个技能随着真实研究项目持续迭代。当前版本包含 Gate 2 默认从严规则（防止过度升级发现）、Gate 3 独立 subagent 审查机制（写作与审阅分离，严格输入管控）、交付格式抽取为独立参考文件、以及适用于任何产品领域的通用化示例。
