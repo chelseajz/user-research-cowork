@@ -58,14 +58,32 @@ Default stance is conservative: do not promote to formal finding unless evidence
 
 Claude presents this as a structured table (candidate finding → proposed status → reasoning → supporting evidence → counter-signals). The user reviews and adjusts. Nothing proceeds to report assembly until this classification is locked.
 
-**Gate 3 — Report quality review** (after complete report draft, before finalization)
-This gate solves **research quality problems** — it is not about whether to publish. Claude presents the full report together with red-team issues (severity-ordered). The user decides:
-- Which evidence-chain gaps or denominator inconsistencies to fix
-- Which red-team issues are P0 (block publication) vs P1 (improve but not block) vs P2 (nice to have)
-- Whether any interpretation crosses the line from supported inference to speculation
-- Whether recommendations exceed the strength of the supporting evidence — a recommendation anchored to a Low-confidence or directional-only finding should be flagged before publication
-- Whether ethical, compliance, or bias concerns need to be addressed in the report text
-For review tasks, this is where the user decides whether to accept the issue list or ask for proposed fixes.
+**Gate 3 — Independent report quality review** (after complete report draft, before finalization)
+This gate solves **research quality problems** — it is not about whether to publish.
+
+To avoid self-review bias (the same model defending its own writing choices), Gate 3 uses an **independent reviewer subagent** under strict input control.
+
+The subagent receives ONLY:
+1. The final report draft (the document being reviewed)
+2. [review-rubric.md](references/review-rubric.md) (the evaluation standard)
+3. Source artifacts necessary for fact-checking: finding ledger, crosstabs, quote tables, sample notes — whatever the reviewer needs to verify claims against raw evidence
+
+The subagent does NOT receive:
+- The writing agent's chain-of-thought or drafting history
+- Codebook evolution notes or finding-classification rationale
+- Strategy discussion history between user and writing agent (unless a specific decision is needed to judge report scope)
+- Any intermediate drafts or revision notes
+
+This boundary matters: if the reviewer sees why the writer made each choice, it stops being an independent audit and becomes a rationalization exercise. The goal is a fresh-eyes review — closer to how a senior researcher would audit a report they did not write.
+
+The subagent produces a severity-ordered issue list covering:
+- Evidence-chain gaps or denominator inconsistencies
+- Red-team issues classified as P0 (block publication) / P1 (improve but not block) / P2 (nice to have)
+- Interpretations that cross the line from supported inference to speculation
+- Recommendations that exceed the strength of the supporting evidence — a recommendation anchored to a Low-confidence or directional-only finding must be flagged
+- Ethical, compliance, or bias concerns that need to be addressed in the report text
+
+The user reviews the subagent's issue list and decides which issues to fix. The original writing agent then applies the approved fixes, retaining full context of how findings were built. For review tasks, this is where the user decides whether to accept the issue list or ask for proposed fixes.
 
 ### Zone 3 — Human decision (2 points)
 
@@ -148,9 +166,9 @@ Steps marked ⏸ are human checkpoints (Zone 2 gates or Zone 3 decisions). All o
 9. Draft findings with confidence labels, select representative quotes and cases, assign recommendation priorities.
 10. ⏸ **Gate 2 — Finding classification** — Present each candidate finding as a structured table: finding → proposed status (formal finding / directional signal / noise) → evidence → counter-signals. User decides what gets promoted, what gets caveated, and what gets dropped. Lock this before proceeding to report assembly.
 11. Produce a full report draft using [report-standard.md](references/report-standard.md).
-12. Red-team the report against [review-rubric.md](references/review-rubric.md), auto-fix mechanical issues, triage remaining issues by severity.
-13. For leadership audiences, compress into executive format using [executive-report-template.md](references/executive-report-template.md). Run `scripts/validate_report.py`.
-14. ⏸ **Gate 3 — Report quality review** — Present the complete report with red-team issues (severity-ordered). User decides which evidence gaps, denominator issues, or interpretation problems to fix. Address ethical, compliance, and bias concerns here. This gate is about research quality, not publication readiness.
+12. Auto-fix mechanical issues (formatting, denominator labels, citation format) against [review-rubric.md](references/review-rubric.md). Run `scripts/validate_report.py`.
+13. For leadership audiences, compress into executive format using [executive-report-template.md](references/executive-report-template.md).
+14. ⏸ **Gate 3 — Independent report quality review** — Launch a **separate reviewer subagent** with only the report draft, original data, and [review-rubric.md](references/review-rubric.md) (no writing-phase reasoning history). The subagent produces a severity-ordered issue list. Present the subagent's issues to the user. User decides which to fix. This gate is about research quality, not publication readiness.
 15. Apply approved fixes, maintain finding ledger for substantial projects, apply delivery formatting rules.
 16. ⏸ **Publication sign-off** — Present the finalized package. User decides: can this be released? To whom? In what order? Does the tone need adjusting for the audience?
 

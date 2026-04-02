@@ -9,6 +9,25 @@ Typical standalone use cases:
 
 ## Reviewer mode
 
+### Context isolation for Gate 3 subagent review
+
+When this rubric is used by the Gate 3 independent reviewer subagent, strict input control applies.
+
+**Allowed inputs:**
+- The final report draft (the document being reviewed)
+- This rubric (the evaluation standard)
+- Source artifacts for fact-checking: finding ledger, crosstabs, quote tables, sample notes
+
+**Blocked inputs:**
+- Writing agent's chain-of-thought or drafting history
+- Codebook evolution notes or finding-classification rationale
+- Strategy discussion history between user and writing agent (unless a specific decision is needed to judge report scope)
+- Intermediate drafts or revision notes
+
+The subagent must treat the report as if written by an unknown author and evaluate it purely on the evidence presented. If the reviewer sees why the writer made each choice, it stops being an independent audit and becomes a rationalization exercise.
+
+### General review rules
+
 When the user asks for a review:
 - list findings first
 - order them by severity
