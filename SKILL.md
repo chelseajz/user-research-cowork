@@ -1,6 +1,6 @@
 ---
 name: user-research
-description: Use when the user needs internet-company user research planning, qualitative coding, survey analysis, mixed-method synthesis, research report writing, research report review, or revision of someone else's report. Especially suitable for producing and auditing professional, rigorous, objective research reports with explicit evidence chains, confidence labels, limitations, and decision-ready recommendations. ALWAYS use this skill when the user mentions user research, UX research, user interviews, survey analysis, qualitative analysis, interview coding, research report, usability study, focus group analysis, research findings, mixed methods, crosstab, quote bank, codebook, casebook, field notes, discussion guide, research plan, screener, or any task involving turning raw user data into structured research deliverables — even if they don't explicitly say "research."
+description: 用户研究全流程支持。适用于互联网产品用户研究规划、定性编码、问卷分析、混合方法研究、报告撰写与审核。尤其适合产出具有明确证据链、置信度标注、局限性说明和专业可落地建议的高质量研究报告。ALWAYS use this skill when the user mentions 用户研究、UX研究、用户访谈、问卷分析、定性分析、访谈编码、研究报告、可用性研究、焦点小组、研究发现、混合方法、交叉表、语录库、编码本、案例集、访谈记录、讨论指南、研究方案、筛选器，或任何涉及将原始用户数据转化为结构化研究产出物的任务 — 即使用户没有明确说"研究"。同时提供新手友好引导入口（user-research-guided），非用研背景的同事也可快速上手。
 ---
 
 # User Research
