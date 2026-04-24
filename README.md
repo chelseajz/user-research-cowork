@@ -2,22 +2,66 @@
 
 用户研究协作模式 skill。面向产品经理、运营、设计师等非用研背景同事，支持从选题到报告的完整研究流程。
 
-## 入口
+## 一句话介绍
 
-| 入口 | 适用场景 |
-|------|----------|
-| `/user-research-cowork` | 协作模式，自动识别身份选择合适流程 |
-| `/user-research-guided` | 纯引导模式（可选） |
+调用 `/user-research-cowork` 后，会先让你选择身份，然后自动推荐合适的模式（引导式/专业式），让你从零开始完成一次完整的用户研究。
+
+## 使用方式
+
+```bash
+/user-research-cowork
+```
+
+启动后会自动弹出身份识别题：
+
+```
+你好！我是用户研究助手。
+
+在开始之前，请告诉我你的身份：
+
+【你的身份是？】
+A. 产品经理 / PM
+B. 运营
+C. 用研同学（专业）
+D. 设计师
+E. 实习生 / 新人
+F. 其他：___
+
+【你做过用户研究吗？】
+A. 做过很多次
+B. 做过 1-2 次
+C. 没做过，这是第一次
+```
+
+**根据你的回答，自动选择模式：**
+
+| 身份/经验 | 推荐模式 |
+|-----------|---------|
+| 用研同学（专业）| 专业模式（跳过引导） |
+| 产品/运营/其他 + 做过研究 | 专业模式（可选择切换） |
+| 实习生/新人 / 没做过研究 | 引导模式（默认） |
+
+你也可以说"切换到专业模式"或"切换到引导模式"随时切换。
 
 ## 核心特性
 
-### 1. Zone 模型人机协作
+### 1. 研究设计避坑指南
+
+内置 5 个新手常见坑：
+
+- **坑 1**：不要问用户"你有没有做过"（记忆偏差）
+- **坑 2**：因果关系要靠对照组
+- **坑 3**：数据优先于问卷
+- **坑 4**：样本量不够 = 结论不可信
+- **坑 5**：开放式问题太多 = 数据没法分析
+
+### 2. Zone 模型人机协作
 
 - **Zone 1** — AI 自动执行（数据清洗、编码、图表、报告框架）
 - **Zone 2** — 3 个确认点（Gate 1 编码表、Gate 2 发现定级、Gate 3 质量审核）
 - **Zone 3** — 人类决策（开始范围确认、结束发布签字）
 
-### 2. 发现定级（Gate 2）
+### 3. 发现定级（Gate 2）
 
 每个候选发现必须定级：
 
@@ -29,66 +73,32 @@
 
 **保守原则**：默认不升级，除非证据充分。
 
-### 3. 独立审核机制
+### 4. 独立审核机制
 
 Gate 3 使用独立 subagent，在严格输入控制下审查报告，避免自我辩护偏差。
 
-### 4. 新手引导入口
+## 安装
 
-`/user-research-guided` 提供：
-- 大白话解释每个环节
-- 分步推进，等待用户确认
-- 术语对照表（编码→整理要点）
-- 自动串联专业 skill
+```bash
+git clone https://github.com/chelseajz/user-research-cowork.git ~/.claude/skills/user-research-cowork
+```
 
 ## 目录结构
 
 ```
 user-research-cowork/
-├── SKILL.md                      # 专业入口（基于 claude 分支）
-├── user-research-guided.json     # 新手引导入口
-├── README.md                     # 本文件
-└── references/                   # 参考文件（19 个）
-    ├── workflow.md
-    ├── report-standard.md
-    ├── review-rubric.md
-    ├── evidence-confidence-standard.md
-    ├── ...
+├── SKILL.md                      # 主入口（包含身份识别 + 双模式）
+├── user-research-guided.json     # 独立引导入口（可选）
+├── README.md                    # 本文件
+├── references/                  # 参考文件（19 个）
+│   ├── workflow.md
+│   ├── report-standard.md
+│   ├── review-rubric.md
+│   └── ...
+└── scripts/
+    └── validate_report.py       # 报告验证脚本
 ```
-
-## 安装
-
-```bash
-# 方式一：直接复制整个目录
-cp -r user-research-cowork ~/.claude/skills/
-
-# 方式二：只复制需要的 skill
-cp user-research-cowork/SKILL.md ~/.claude/skills/
-cp user-research-cowork/user-research-guided.json ~/.claude/skills/
-```
-
-## 使用方式
-
-### 专业模式
-
-```
-/user-research --topic="新用户7天留存低" --context="产品是理财App"
-```
-
-### 引导模式
-
-```
-/user-research-guided --topic="新用户7天留存低" --context="产品是理财App"
-```
-
-## 与上游差异
-
-基于 [chelseajz/user-research-skill](https://github.com/chelseajz/user-research-skill) claude 分支：
-- 新增 `user-research-guided.json` 引导入口
-- SKILL.md description 改为中英双语
-- 保留所有专业实践（Zone 模型、Gate 机制、置信度标注）
 
 ## 参考
 
-- 原始项目：[chelseajz/user-research-skill](https://github.com/chelseajz/user-research-skill)
-- claude 分支：包含完整的 Zone 模型和 Gate 机制
+- GitHub: https://github.com/chelseajz/user-research-cowork
