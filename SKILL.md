@@ -1,25 +1,177 @@
 ---
-name: user-research
-description: 用户研究全流程支持。适用于互联网产品用户研究规划、定性编码、问卷分析、混合方法研究、报告撰写与审核。尤其适合产出具有明确证据链、置信度标注、局限性说明和专业可落地建议的高质量研究报告。ALWAYS use this skill when the user mentions 用户研究、UX研究、用户访谈、问卷分析、定性分析、访谈编码、研究报告、可用性研究、焦点小组、研究发现、混合方法、交叉表、语录库、编码本、案例集、访谈记录、讨论指南、研究方案、筛选器，或任何涉及将原始用户数据转化为结构化研究产出物的任务 — 即使用户没有明确说"研究"。同时提供新手友好引导入口（user-research-guided），非用研背景的同事也可快速上手。
+name: user-research-cowork
+description: 用户研究协作模式。支持产品经理、运营、设计师等非用研背景同事完成用户研究全流程，自动识别用户身份并选择合适模式（引导式/专业式）。包含研究设计避坑指南、Zone 模型人机协作、Gate 质量关卡。适用于研究规划、访谈编码、问卷分析、报告撰写。
 ---
 
-# User Research
+# User Research Cowork
 
-This skill turns broad "do research" requests into a disciplined workflow that protects evidence quality and report credibility.
+## 用户身份识别（第一步必做）
 
-Use it for:
-- Research planning for product, growth, monetization, retention, trust, service, or experience topics
-- Qualitative analysis of interviews, tickets, feedback, chats, or call notes
-- Survey analysis and mixed-method synthesis
-- Writing or reviewing research reports for product, design, operations, strategy, or leadership
-- Auditing and revising reports written by agencies, vendors, teammates, or other AI systems
+**每次启动时，主动询问用户身份：**
 
-Do not use it for:
-- Pure market news lookups with no user data
-- Fabricating research findings or overstating weak evidence
-- Treating small qualitative samples as representative population estimates
+```
+你好！我是用户研究助手。
 
-## Human-AI collaboration model
+在开始之前，请告诉我你的身份：
+
+【你的身份是？】
+A. 产品经理 / PM
+B. 运营
+C. 用研同学（专业）
+D. 设计师
+E. 实习生 / 新人
+F. 其他：___
+
+【你做过用户研究吗？】
+A. 做过很多次
+B. 做过 1-2 次
+C. 没做过，这是第一次
+```
+
+**根据回答自动选择模式：**
+
+| 身份/经验 | 推荐模式 |
+|-----------|---------|
+| 用研同学（专业）| 专业模式（跳过引导） |
+| 产品/运营/其他 + 做过研究 | 专业模式（可选择切换） |
+| 实习生/新人 / 没做过研究 | 引导模式（默认） |
+| 任何用户主动说"新手" | 引导模式 |
+
+**用户也可以主动切换**：说"切换到专业模式"或"切换到引导模式"即可。
+
+---
+
+## 新手必读：研究设计避坑指南
+
+### 坑 1：不要问用户"你有没有做过"
+
+用户经常记错或乱答，比如：
+- 没看过视频的人会说"看过"（社会期望效应）
+- 看过的人会说"没看过"（记忆偏差）
+
+**正确做法**：
+- 看行为数据（埋点），而不是问用户
+- 如果必须用问卷，用对照组设计（看过 vs 没看过）
+
+---
+
+### 坑 2：因果关系要靠对照组
+
+| 错误思路 | 正确思路 |
+|---------|---------|
+| "看过视频的用户绑卡率更高，说明视频有效" | 需要对比：看过视频的用户 vs 没看过视频的用户，看转化率是否有差异 |
+
+**对照组设计时机**：
+- 评估某个功能/内容的效果时 → 考虑设对照组
+- 探索用户需求/痛点时 → 通常不需要对照组
+
+---
+
+### 坑 3：数据优先于问卷
+
+| 数据来源 | 可靠性 | 成本 |
+|---------|--------|------|
+| 行为数据（埋点） | 最高 | 低 |
+| 实验数据（A/B 测试） | 高 | 中 |
+| 用户访谈 | 中高 | 高 |
+| 问卷调查 | 中 | 低 |
+
+**优先排序**：行为数据 > 实验数据 > 访谈 > 问卷
+
+---
+
+### 坑 4：样本量不够 = 结论不可信
+
+| 目的 | 最少样本量 |
+|------|-----------|
+| 探索性研究（发现方向） | 5-10 人访谈 |
+| 定量验证（证明结论） | 100+ 份问卷 |
+| 细分人群对比 | 每组 30+ 样本 |
+
+---
+
+### 坑 5：开放式问题太多 = 数据没法分析
+
+| 问题类型 | 适用场景 | 分析难度 |
+|---------|---------|---------|
+| 开放式（填空） | 探索未知、收集建议 | 高（需人工编码） |
+| 量表（1-5 分） | 满意度、程度打分 | 低 |
+| 选择题 | 行为、偏好、人口属性 | 低 |
+
+**建议**：少量开放式 + 大量封闭式组合
+
+---
+
+## 新手引导流程（内嵌版）
+
+如果你确定用户需要引导式帮助，立即执行以下流程：
+
+### 第一步：确认研究范围
+
+用中文友好地问用户：
+
+```
+【Q1】你的研究目的是什么？（可多选）
+A. 评估某个功能/内容的效果
+B. 了解用户需求和痛点
+C. 优化产品体验
+D. 其他：___
+
+【Q2】你能获取到哪些数据？
+A. 埋点/行为数据
+B. 用户访谈机会
+C. 问卷发放渠道
+D. 以上都没有，需要另想办法
+
+【Q3】你希望什么时候完成？
+A. 本周
+B. 2 周内
+C. 1 个月内
+```
+
+用户回答后，继续：
+
+### 第二步：提供研究方案
+
+根据用户的选择，推荐合适的研究方案，包含：
+- 研究目的
+- 推荐方法
+- 所需数据
+- 时间估算
+
+告诉用户："按这个方案去收集数据，数据整理成 txt 格式发给我，我们继续下一步。"
+
+### 第三步：数据编码
+
+用大白话解释后，调用 `/research-code`
+
+### 第四步：交叉分析
+
+用大白话解释后，调用 `/research-analyze`
+
+### 第五步：洞察提炼
+
+用大白话解释后，调用 `/research-insight`
+
+### 第六步：发现定级
+
+展示发现列表，让用户选择每个发现的状态
+
+### 第七步：报告生成
+
+调用 `/research-report`
+
+### 第八步：质量审核
+
+调用 `/research-review`
+
+---
+
+## 专业模式
+
+如果你确定用户是有经验的专业用研人员，直接进入专业模式：
+
+### Human-AI collaboration model
 
 Not every research step should be fully automated. This skill follows a three-zone model inspired by current best practices in AI-assisted research (REFINE framework, Great Question 6-step pipeline, and the augmentation-not-replacement consensus). The zones determine when Claude acts autonomously, when it proposes for human review, and when it must defer to human judgment.
 
